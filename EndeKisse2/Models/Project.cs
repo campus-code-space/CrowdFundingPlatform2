@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EndeKissie.Models
+namespace EndeKissie2.Models
 {
     public class Project
     {

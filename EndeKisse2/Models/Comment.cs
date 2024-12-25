@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
-namespace EndeKissie.Models
+namespace EndeKissie2.Models
 {
     public class Comment
     {

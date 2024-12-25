@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EndeKissie2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,7 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<
-            > _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
         {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace EndeKissie.Models
+namespace EndeKissie2.Models
 {
     public class ApplicationUser : IdentityUser
     {

@@ -5,6 +5,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using EndeKissie2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,9 +18,7 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<
-            
-            > _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _sender;
 
         public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSender sender)
