@@ -37,6 +37,7 @@ namespace EndeKisse2.Data
             //    .WithMany(p => p.Comments)
             //    .HasForeignKey(c => c.ProjectId)
             //    .OnDelete(DeleteBehavior.NoAction); // Optional: Cascading deletes
+            base.OnModelCreating(modelBuilder);
         }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

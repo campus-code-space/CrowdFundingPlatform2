@@ -12,7 +12,7 @@ namespace EndeKissie.Models
         public IFormFile? ImageFile { get; set; }
         public string ImageUrl { get; set; } = "https://via.placeholder.com/150";
 
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser? User { get; set; }
 
