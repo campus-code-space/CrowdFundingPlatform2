@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using EndeKisse2.Data;
 using EndeKissie2.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace EndeKisse2.Areas.Identity.Pages.Account
@@ -30,6 +32,7 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -106,6 +109,11 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
+            [Display(Name = "Fayda Id Number")]
+            public string FaydaIdNum { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "LastName")]
             public string LastName { get; set; }
 
@@ -128,6 +136,42 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+        
+        public async Task<bool> UploadImage(IFormFile imageFile, string userId)
+        {
+            if (imageFile == null || imageFile.Length == 0)
+            {
+                return false;
+            }
+
+            // Define the folder where images will be stored
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+            Directory.CreateDirectory(uploadPath); // Ensure directory exists
+
+            // Generate unique file name
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
+            var filePath = Path.Combine(uploadPath, fileName);
+
+            // Save file locally
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+
+            // Save image metadata to database
+            var imageStore = new ImageStore
+            {
+                UserId = userId,
+                ImageUrl = $"/images/{fileName}" // Relative path to the image
+            };
+
+            _context.ImageStore.Add(imageStore);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -137,7 +181,8 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                
+                await UploadImage(Input.UserPhoto, user.Id);
+                await UploadImage(Input.IdPhoto, user.Id);
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
