@@ -7,6 +7,7 @@ namespace EndeKissie2.Models
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public int AccountNum { get; set; }
+        public int FaydaIdNum { get; set; }
         public byte[] UserImage { get; set; } = null!;
         public bool Deleted { get; set; }
 

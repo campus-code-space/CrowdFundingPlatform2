@@ -98,6 +98,27 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "FirstName")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "LastName")]
+            public string LastName { get; set; }
+
+
+            [Required]
+            [DataType(DataType.Upload)]
+            [Display(Name = "UserPhoto")]
+            public IFormFile UserPhoto { get; set; }
+
+            [Required]
+            [DataType(DataType.Upload)]
+            [Display(Name = "IdPhoto")]
+            public IFormFile IdPhoto { get; set; }
         }
 
 
@@ -114,6 +135,9 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

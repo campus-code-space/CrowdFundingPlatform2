@@ -1,4 +1,4 @@
-﻿using EndeKissie.Models;
+﻿using EndeKissie2.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
