@@ -164,41 +164,6 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        
-        public async Task<bool> UploadImage(IFormFile imageFile, string userId)
-        {
-            if (imageFile == null || imageFile.Length == 0)
-            {
-                return false;
-            }
-
-            // Define the folder where images will be stored
-            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-            Directory.CreateDirectory(uploadPath); // Ensure directory exists
-
-            // Generate unique file name
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
-            var filePath = Path.Combine(uploadPath, fileName);
-
-            // Save file locally
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(stream);
-            }
-
-            // Save image metadata to database
-            var imageStore = new ImageStore
-            {
-                UserId = userId,
-                ImageUrl = $"/images/{fileName}" // Relative path to the image
-            };
-
-            _context.ImageStore.Add(imageStore);
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -284,6 +249,40 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
+        }
+
+        public async Task<bool> UploadImage(IFormFile imageFile, string userId)
+        {
+            if (imageFile == null || imageFile.Length == 0)
+            {
+                return false;
+            }
+
+            // Define the folder where images will be stored
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+            Directory.CreateDirectory(uploadPath); // Ensure directory exists
+
+            // Generate unique file name
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
+            var filePath = Path.Combine(uploadPath, fileName);
+
+            // Save file locally
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+
+            // Save image metadata to database
+            var imageStore = new ImageStore
+            {
+                UserId = userId,
+                ImageUrl = $"/images/{fileName}" // Relative path to the image
+            };
+
+            _context.ImageStore.Add(imageStore);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
