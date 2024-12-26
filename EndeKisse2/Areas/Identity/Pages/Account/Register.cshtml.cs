@@ -104,8 +104,13 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "FirstName")]
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
@@ -114,18 +119,41 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "LastName")]
-            public string LastName { get; set; }
+            [Display(Name = "Residence")]
+            public string Residence { get; set; }
 
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Role")]
+            public string role { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+
+            [Required]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
+            [Required]
+            [DataType(DataType.DateTime)]
+            [Display(Name = "Date Of Birth")]
+            public DateTime DOB { get; set; }
 
             [Required]
             [DataType(DataType.Upload)]
-            [Display(Name = "UserPhoto")]
+            [Display(Name = "User Photo")]
+            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
             public IFormFile UserPhoto { get; set; }
 
             [Required]
             [DataType(DataType.Upload)]
-            [Display(Name = "IdPhoto")]
+            [Display(Name = "ID Photo")]
+            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
             public IFormFile IdPhoto { get; set; }
         }
 
@@ -181,9 +209,20 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                await UploadImage(Input.UserPhoto, user.Id);
-                await UploadImage(Input.IdPhoto, user.Id);
+                user.FaydaIdNum = Input.FaydaIdNum;
+                user.Gender = Input.Gender;
+                user.DOB = Input.DOB;
+                user.role = Input.role;
+                user.Residence = Input.Residence;
+                user.PhoneNumber = Input.PhoneNumber;
 
+                if (await UploadImage(Input.UserPhoto, user.Id)) { }
+                else{ _logger.LogWarning("User Photo is Uploaded"); }
+
+                if (await UploadImage(Input.IdPhoto, user.Id)) { }
+                else { _logger.LogWarning("Id Photo is Uploaded"); }
+               
+                
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
