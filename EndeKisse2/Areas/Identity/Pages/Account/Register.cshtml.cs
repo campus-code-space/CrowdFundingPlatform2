@@ -102,59 +102,59 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            //[Required]
+            //[DataType(DataType.Text)]
+            //[Display(Name = "First Name")]
+            //public string FirstName { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
+            //[Required]
+            //[DataType(DataType.Text)]
+            //[Display(Name = "Last Name")]
+            //public string LastName { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Fayda Id Number")]
-            public string FaydaIdNum { get; set; }
+            //[Required]
+            //[DataType(DataType.Text)]
+            //[Display(Name = "Fayda Id Number")]
+            //public string FaydaIdNum { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Residence")]
-            public string Residence { get; set; }
+            //[Required]
+            //[DataType(DataType.Text)]
+            //[Display(Name = "Residence")]
+            //public string Residence { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Role")]
-            public string role { get; set; }
+            //[Required]
+            //[DataType(DataType.Text)]
+            //[Display(Name = "Role")]
+            //public string role { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Gender")]
-            public string Gender { get; set; }
+            //[Required]
+            //[DataType(DataType.Text)]
+            //[Display(Name = "Gender")]
+            //public string Gender { get; set; }
 
-            [Required]
-            [DataType(DataType.PhoneNumber)]
-            [Display(Name = "Phone Number")]
-            public string PhoneNumber { get; set; }
+            //[Required]
+            //[DataType(DataType.PhoneNumber)]
+            //[Display(Name = "Phone Number")]
+            //public string PhoneNumber { get; set; }
 
-            [Required]
-            [DataType(DataType.DateTime)]
-            [Display(Name = "Date Of Birth")]
-            public DateTime DOB { get; set; }
+            //[Required]
+            //[DataType(DataType.DateTime)]
+            //[Display(Name = "Date Of Birth")]
+            //public DateTime DOB { get; set; }
 
-            [Required]
-            [DataType(DataType.Upload)]
-            [Display(Name = "User Photo")]
-            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
-            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
-            public IFormFile UserPhoto { get; set; }
+            //[Required]
+            //[DataType(DataType.Upload)]
+            //[Display(Name = "User Photo")]
+            //[RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            //ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
+            //public IFormFile UserPhoto { get; set; }
 
-            [Required]
-            [DataType(DataType.Upload)]
-            [Display(Name = "ID Photo")]
-            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
-            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
-            public IFormFile IdPhoto { get; set; }
+            //[Required]
+            //[DataType(DataType.Upload)]
+            //[Display(Name = "ID Photo")]
+            //[RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            //ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
+            //public IFormFile IdPhoto { get; set; }
         }
 
 
@@ -172,20 +172,20 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.FirstName = Input.FirstName;
-                user.LastName = Input.LastName;
-                user.FaydaIdNum = Input.FaydaIdNum;
-                user.Gender = Input.Gender;
-                user.DOB = Input.DOB;
-                user.role = Input.role;
-                user.Residence = Input.Residence;
-                user.PhoneNumber = Input.PhoneNumber;
+                //user.FirstName = Input.FirstName;
+                //user.LastName = Input.LastName;
+                //user.FaydaIdNum = Input.FaydaIdNum;
+                //user.Gender = Input.Gender;
+                //user.DOB = Input.DOB;
+                //user.role = Input.role;
+                //user.Residence = Input.Residence;
+                //user.PhoneNumber = Input.PhoneNumber;
 
-                if (await UploadImage(Input.UserPhoto, user.Id)) { }
-                else{ _logger.LogWarning("User Photo is Uploaded"); }
+                //if (await UploadImage(Input.UserPhoto, user.Id)) { }
+                //else{ _logger.LogWarning("User Photo is Uploaded"); }
 
-                if (await UploadImage(Input.IdPhoto, user.Id)) { }
-                else { _logger.LogWarning("Id Photo is Uploaded"); }
+                //if (await UploadImage(Input.IdPhoto, user.Id)) { }
+                //else { _logger.LogWarning("Id Photo is Uploaded"); }
                
                 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -251,38 +251,38 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
-        public async Task<bool> UploadImage(IFormFile imageFile, string userId)
-        {
-            if (imageFile == null || imageFile.Length == 0)
-            {
-                return false;
-            }
+        //public async Task<bool> UploadImage(IFormFile imageFile, string userId)
+        //{
+        //    if (imageFile == null || imageFile.Length == 0)
+        //    {
+        //        return false;
+        //    }
 
-            // Define the folder where images will be stored
-            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-            Directory.CreateDirectory(uploadPath); // Ensure directory exists
+        //    // Define the folder where images will be stored
+        //    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+        //    Directory.CreateDirectory(uploadPath); // Ensure directory exists
 
-            // Generate unique file name
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
-            var filePath = Path.Combine(uploadPath, fileName);
+        //    // Generate unique file name
+        //    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
+        //    var filePath = Path.Combine(uploadPath, fileName);
 
-            // Save file locally
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(stream);
-            }
+        //    // Save file locally
+        //    using (var stream = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        await imageFile.CopyToAsync(stream);
+        //    }
 
-            // Save image metadata to database
-            var imageStore = new ImageStore
-            {
-                UserId = userId,
-                ImageUrl = $"/images/{fileName}" // Relative path to the image
-            };
+        //    // Save image metadata to database
+        //    var imageStore = new ImageStore
+        //    {
+        //        UserId = userId,
+        //        ImageUrl = $"/images/{fileName}" // Relative path to the image
+        //    };
 
-            _context.ImageStore.Add(imageStore);
-            await _context.SaveChangesAsync();
+        //    _context.ImageStore.Add(imageStore);
+        //    await _context.SaveChangesAsync();
 
-            return true;
-        }
+        //    return true;
+        //}
     }
 }

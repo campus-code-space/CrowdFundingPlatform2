@@ -1,6 +1,8 @@
 ﻿using EndeKissie2.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace EndeKisse2.Data
 {
@@ -17,26 +19,6 @@ namespace EndeKisse2.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //// One-to-Many: ApplicationUser → Project
-            //modelBuilder.Entity<Project>()
-            //    .HasOne(p => p.User)
-            //    .WithMany(u => u.Projects)
-            //    .HasForeignKey(p => p.UserId)
-            //    .OnDelete(DeleteBehavior.NoAction); // Optional: Cascading deletes
-
-            //// One-to-Many: ApplicationUser → Comment
-            //modelBuilder.Entity<Comment>()
-            //    .HasOne(c => c.User)
-            //    .WithMany(u => u.Comments)
-            //    .HasForeignKey(c => c.UserId)
-            //    .OnDelete(DeleteBehavior.NoAction); // Optional: Cascading deletes
-
-            //// One-to-Many: Project → Comment
-            //modelBuilder.Entity<Comment>()
-            //    .HasOne(c => c.Project)
-            //    .WithMany(p => p.Comments)
-            //    .HasForeignKey(c => c.ProjectId)
-            //    .OnDelete(DeleteBehavior.NoAction); // Optional: Cascading deletes
             base.OnModelCreating(modelBuilder);
         }
 

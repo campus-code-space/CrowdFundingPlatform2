@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EndeKissie2.Models
 {
@@ -19,6 +20,18 @@ namespace EndeKissie2.Models
         public string Size { get; set; } = null!;
 
         public byte[]? ProjectImage { get; set; } // direct DB store
+
+        [NotMapped]
+        public IFormFile? ImageFile1 { get; set; }
+        public string ImageUrl1 { get; set; } = "https://via.placeholder.com/150";
+
+        [NotMapped]
+        public IFormFile? ImageFile2 { get; set; }
+        public string ImageUrl2 { get; set; } = "https://via.placeholder.com/150";
+
+        [NotMapped]
+        public IFormFile? ImageFile3 { get; set; }
+        public string ImageUrl3 { get; set; } = "https://via.placeholder.com/150";
 
         public DateTime NeedDeadLineTime { get; set; }
 

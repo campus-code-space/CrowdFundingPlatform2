@@ -1,0 +1,119 @@
+﻿@model IEnumerable<EndeKissie2.Models.Project>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NeedDeadLineTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubmissionDeadLineTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TargetAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectStatusId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProgressId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @if (item.Images != null && item.Images.Any())
+                {
+                    <div class="image-gallery">
+                        @foreach (var image in item.Images)
+                        {
+                            <img src="@image.ImageUrl" alt="Project Image" style="width: 100px; height: auto; margin: 5px;" />
+                        }
+                    </div>
+                }
+                else
+                {
+                    <span>No images available</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NeedDeadLineTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDeadLineTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TargetAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectStatusId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgressId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
