@@ -33,8 +33,9 @@
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="imageUpload">Upload Images</label>
-                <input type="file" name="imageFiles" id="imageUpload" class="form-control" />
+                <label for="ImageFile1">Upload Image</label>
+                <input type="file" class="form-control" asp-for="ImageFile1" required />
+                <span asp-validation-for="ImageFile1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NeedDeadLineTime" class="control-label"></label>

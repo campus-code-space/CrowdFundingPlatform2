@@ -9,6 +9,7 @@ using EndeKisse2.Data;
 using EndeKissie2.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using EndeKisse2.Services;
 
 namespace EndeKisse2.Controllers
 {
@@ -17,7 +18,6 @@ namespace EndeKisse2.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
 
         public ProjectsController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
@@ -66,10 +66,14 @@ namespace EndeKisse2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Project project, Progress progress, ProjectStatus projectStatus, List<IFormFile> imageFiles)
+        public async Task<IActionResult> Create(Project project, Progress progress, ProjectStatus projectStatus)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && project.ImageFile1 != null)
             {
+                SupabaseService supabaseService = new SupabaseService();
+                ImageService _imageService = new ImageService(supabaseService);
+                string imageUrl = await _imageService.UploadImageAsync(project.ImageFile1, "Endekissie");
+                project.ImageUrl1 = imageUrl;
 
                 _context.Add(project);   // do the Add() funtion set the db ?? 
                 await _context.SaveChangesAsync();
@@ -79,37 +83,10 @@ namespace EndeKisse2.Controllers
                 progress.Description = "Project Intiated";
 
                 projectStatus.ProjectId = project.Id;
-                projectStatus.Banned = false;
+                projectStatus.Banned = false;   
                 projectStatus.Funded = false;
 
-                if (imageFiles != null && imageFiles.Any())
-                {
-                    foreach (var file in imageFiles)
-                    {
-                        if (file.Length > 0)
-                        {
-                            // Save the file to a local directory
-                            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                            string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                            using (var fstream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await file.CopyToAsync(fstream);
-                            }
-
-                            // Create a new ImageStore entry
-                            var imageStore = new ImageStore
-                            {
-                                ProjectId = project.Id,
-                                ImageUrl = $"~/images/{file.FileName}"
-                            };
-
-                            _context.ImageStore.Add(imageStore);
-                        }
-                    }
-
-                    await _context.SaveChangesAsync();
-                }
+                
 
                 _context.Add(progress);
                 _context.Add(projectStatus);
