@@ -33,12 +33,14 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
+            IWebHostEnvironment webHostEnvironment,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -47,6 +49,7 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -102,59 +105,66 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Text)]
-            //[Display(Name = "First Name")]
-            //public string FirstName { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Text)]
-            //[Display(Name = "Last Name")]
-            //public string LastName { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Text)]
-            //[Display(Name = "Fayda Id Number")]
-            //public string FaydaIdNum { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Fayda Id Number")]
+            public string FaydaIdNum { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Text)]
-            //[Display(Name = "Residence")]
-            //public string Residence { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Residence")]
+            public string Residence { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Text)]
-            //[Display(Name = "Role")]
-            //public string role { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Role")]
+            public string role { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Text)]
-            //[Display(Name = "Gender")]
-            //public string Gender { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
 
-            //[Required]
-            //[DataType(DataType.PhoneNumber)]
-            //[Display(Name = "Phone Number")]
-            //public string PhoneNumber { get; set; }
+            [Required]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
 
-            //[Required]
-            //[DataType(DataType.DateTime)]
-            //[Display(Name = "Date Of Birth")]
-            //public DateTime DOB { get; set; }
+            [Required]
+            [DataType(DataType.DateTime)]
+            [Display(Name = "Date Of Birth")]
+            public DateTime DOB { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Upload)]
-            //[Display(Name = "User Photo")]
-            //[RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
-            //ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
-            //public IFormFile UserPhoto { get; set; }
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Gender")]
+            public string LinckedinAcc { get; set; }
 
-            //[Required]
-            //[DataType(DataType.Upload)]
-            //[Display(Name = "ID Photo")]
-            //[RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
-            //ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
-            //public IFormFile IdPhoto { get; set; }
+            [Required]
+            [DataType(DataType.Upload)]
+            [Display(Name = "User Photo")]
+            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
+            public IFormFile UserPhoto { get; set; }
+
+            [Required]
+            [DataType(DataType.Upload)]
+            [Display(Name = "ID Photo")]
+            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
+            public IFormFile IdPhoto { get; set; }
+
+            
         }
 
 
@@ -172,22 +182,41 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                //user.FirstName = Input.FirstName;
-                //user.LastName = Input.LastName;
-                //user.FaydaIdNum = Input.FaydaIdNum;
-                //user.Gender = Input.Gender;
-                //user.DOB = Input.DOB;
-                //user.role = Input.role;
-                //user.Residence = Input.Residence;
-                //user.PhoneNumber = Input.PhoneNumber;
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.FaydaIdNum = Input.FaydaIdNum;
+                user.Gender = Input.Gender;
+                user.DOB = Input.DOB;
+                user.role = Input.role;
+                user.Residence = Input.Residence;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.LinkedinAcc = Input.LinckedinAcc;
 
-                //if (await UploadImage(Input.UserPhoto, user.Id)) { }
-                //else{ _logger.LogWarning("User Photo is Uploaded"); }
+                if (Input.UserPhoto != null)
+                {
+                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Input.UserPhoto.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await Input.UserPhoto.CopyToAsync(fileStream);
+                    }
+                    user.UserImageUrl = $"~/images/{uniqueFileName}";
+                }
 
-                //if (await UploadImage(Input.IdPhoto, user.Id)) { }
-                //else { _logger.LogWarning("Id Photo is Uploaded"); }
-               
-                
+                if (Input.IdPhoto != null)
+                {
+                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Input.IdPhoto.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await Input.IdPhoto.CopyToAsync(fileStream);
+                    }
+                    user.IdImageUrl = $"~/images/{uniqueFileName}";
+                }
+
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -32,11 +32,7 @@
                 <input asp-for="Size" class="form-control" />
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label for="ImageFile1">Upload Image</label>
-                <input type="file" class="form-control" asp-for="ImageFile1" required />
-                <span asp-validation-for="ImageFile1" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="NeedDeadLineTime" class="control-label"></label>
                 <input asp-for="NeedDeadLineTime" class="form-control" />
@@ -62,14 +58,9 @@
                 <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId" ></select>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectStatusId" class="control-label"></label>
-                <input asp-for="ProjectStatusId" class="form-control" />
-                <span asp-validation-for="ProjectStatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProgressId" class="control-label"></label>
-                <input asp-for="ProgressId" class="form-control" />
-                <span asp-validation-for="ProgressId" class="text-danger"></span>
+                <label for="ImageUpload">Upload Image</label>
+                <input class="form-control" id="ImageUpload" asp-for="ImageFile1" name="ImageFile1" />
+                <span asp-validation-for="ImageFile1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

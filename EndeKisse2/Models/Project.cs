@@ -23,15 +23,15 @@ namespace EndeKissie2.Models
 
         [NotMapped]
         public IFormFile? ImageFile1 { get; set; }
-        public string ImageUrl1 { get; set; } = "https://via.placeholder.com/150";
+        public string? ImageUrl1 { get; set; }
 
         [NotMapped]
         public IFormFile? ImageFile2 { get; set; }
-        public string ImageUrl2 { get; set; } = "https://via.placeholder.com/150";
+        public string? ImageUrl2 { get; set; }
 
         [NotMapped]
         public IFormFile? ImageFile3 { get; set; }
-        public string ImageUrl3 { get; set; } = "https://via.placeholder.com/150";
+        public string? ImageUrl3 { get; set; }
 
         public DateTime NeedDeadLineTime { get; set; }
 

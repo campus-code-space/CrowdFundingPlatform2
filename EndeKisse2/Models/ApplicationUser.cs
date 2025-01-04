@@ -15,14 +15,16 @@ namespace EndeKissie2.Models
         public string Gender { get; set; } = null!;
         public string Residence { get; set; } = null!;
         public string role { get; set; } = null!;
+        public string LinkedinAcc { get; set; } = null!;
+
 
         [NotMapped]
         public IFormFile? IdImageFile { get; set; }
-        public string IdImageUrl { get; set; } = "https://via.placeholder.com/150";
+        public string? IdImageUrl { get; set; }
 
         [NotMapped]
         public IFormFile? UserImageFile { get; set; }
-        public string UserImageUrl { get; set; } = "https://via.placeholder.com/150";
+        public string? UserImageUrl { get; set; }
 
 
         public List<ImageStore>? Image { get; set; }

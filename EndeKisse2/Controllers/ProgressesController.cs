@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EndeKisse2.Data;
 using EndeKissie2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EndeKisse2.Controllers
 {
+    [Authorize]
     public class ProgressesController : Controller
     {
         private readonly ApplicationDbContext _context;

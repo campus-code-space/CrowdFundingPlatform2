@@ -10,10 +10,11 @@ using EndeKissie2.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using EndeKisse2.Services;
+using Microsoft.CodeAnalysis;
 
 namespace EndeKisse2.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -66,14 +67,23 @@ namespace EndeKisse2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Project project, Progress progress, ProjectStatus projectStatus)
+        public async Task<IActionResult> Create(EndeKissie2.Models.Project project, Progress progress, ProjectStatus projectStatus)
         {
-            if (ModelState.IsValid && project.ImageFile1 != null)
+            if (ModelState.IsValid)
             {
-                SupabaseService supabaseService = new SupabaseService();
-                ImageService _imageService = new ImageService(supabaseService);
-                string imageUrl = await _imageService.UploadImageAsync(project.ImageFile1, "Endekissie");
-                project.ImageUrl1 = imageUrl;
+
+                if (project.ImageFile1 != null)
+                {
+                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + project.ImageFile1.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await project.ImageFile1.CopyToAsync(fileStream);
+                    }
+                    project.ImageUrl1 = $"~/images/{uniqueFileName}";
+                }
+
 
                 _context.Add(project);   // do the Add() funtion set the db ?? 
                 await _context.SaveChangesAsync();
@@ -114,12 +124,35 @@ namespace EndeKisse2.Controllers
             return View(project);
         }
 
+        public void DeleteImage(string imageUrl)
+        {
+            if (string.IsNullOrWhiteSpace(imageUrl)) {}
+            else
+            {
+                // Convert the URL to a physical file path
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                string fullPath = Path.Combine(webRootPath, imageUrl.TrimStart('/'));
+
+                // Check if the file exists
+                if (System.IO.File.Exists(fullPath))
+                {
+                    // Delete the file
+                    System.IO.File.Delete(fullPath);
+                }
+                else { }
+                //catch (Exception ex)
+                //{
+                //    throw ex;
+                //}
+            }
+        }
+
         // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Deleted,Category,Size,ProjectImage,NeedDeadLineTime,SubmissionDeadLineTime,TargetAmount,Description,UserId,ProjectStatusId,ProgressId")] Project project)
+        public async Task<IActionResult> Edit(int id, EndeKissie2.Models.Project project)
         {
             if (id != project.Id)
             {
@@ -128,8 +161,26 @@ namespace EndeKisse2.Controllers
 
             if (ModelState.IsValid)
             {
+                string? prevImageUrl = await _context.Project
+                                            .Where(i => i.Id == id && !string.IsNullOrEmpty(i.ImageUrl1))
+                                            .OrderByDescending(i => i.Id) // Assuming Id is an auto-incrementing primary key
+                                            .Select(i => i.ImageUrl1)
+                                            .FirstOrDefaultAsync();
+                project.ImageUrl1 = prevImageUrl;
                 try
                 {
+                    if (project.ImageFile1 != null)
+                    {
+                        string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + project.ImageFile1.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await project.ImageFile1.CopyToAsync(fileStream);
+                        }
+                        project.ImageUrl1 = $"~/images/{uniqueFileName}";
+                    }
+                   
                     _context.Update(project);
                     await _context.SaveChangesAsync();
                 }

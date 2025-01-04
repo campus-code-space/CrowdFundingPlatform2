@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -23,20 +23,22 @@
                     <input class="form-check-input" asp-for="Deleted" /> @Html.DisplayNameFor(model => model.Deleted)
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" disabled/>   @* CANN'T BE EDTIED' *@
+                <input asp-for="Category" class="form-control"/> 
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
+          
             <div class="form-group">
                 <label asp-for="Size" class="control-label"></label>
                 <input asp-for="Size" class="form-control" />
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectImage" class="control-label"></label>
-                <input asp-for="ProjectImage" class="form-control" />
-                <span asp-validation-for="ProjectImage" class="text-danger"></span>
+                <label asp-for="ImageFile1" class="control-label">Change Image</label>
+                <img src="@Url.Content(Model.ImageUrl1)" alt="Project Image" width="100" height="100" />
+                <input type="file" asp-for="ImageFile1" class="form-control" />
+                <span asp-validation-for="ImageFile1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NeedDeadLineTime" class="control-label"></label>
