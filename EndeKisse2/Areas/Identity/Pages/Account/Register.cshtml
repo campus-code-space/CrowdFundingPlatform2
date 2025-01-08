@@ -8,60 +8,60 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form id="registerForm"  asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
-            <h2>Create a new account.</h2>
+        <form id="registerForm" class="custom-blueblack p-2 rounded-3" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+            <h2 class="text-white text-center">Sign Up</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div> 
             <div class="form-floating mb-3">
                 <!-- Firstname --></>
-                <input asp-for="Input.FirstName" class="form-control" autocomplete="username" aria-required="true" placeholder="FirstName" />
-                <label asp-for="Input.FirstName">First Name</label>
+                <input  asp-for="Input.FirstName" class="form-control input-custom" autocomplete="username" aria-required="true" placeholder="FirstName" />
+                <label asp-for="Input.FirstName" class="text-white">First Name</label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <!-- Lasttname --></>
-                <input asp-for="Input.LastName" class="form-control" autocomplete="username" aria-required="true" placeholder="LastName" />
-                <label asp-for="Input.LastName">Last Name</label>
+                <input asp-for="Input.LastName" class="form-control input-custom" autocomplete="username" aria-required="true" placeholder="LastName" />
+                <label asp-for="Input.LastName" class="text-white">Last Name</label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <!-- Gender --></>
-                <select asp-for="Input.Gender" aria-required="true" class="form-control">
+                <select asp-for="Input.Gender" aria-required="true" class="form-control input-custom">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Custom">Custom</option>
                 </select>
-                <label asp-for="Input.Gender">Gender</label>
+                <label asp-for="Input.Gender" class="text-white">Gender</label>
                 <span asp-validation-for="Input.Gender" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <!-- DOB  --></>
-                <input asp-for="Input.DOB" class="form-control" autocomplete="username" aria-required="true" type="datetime-local" />
-                <label asp-for="Input.DOB">Date Of Birth</label>
+                <input asp-for="Input.DOB" class="form-control input-custom" autocomplete="username" aria-required="true" type="datetime-local" />
+                <label asp-for="Input.DOB" class="text-white">Date Of Birth</label>
                 <span asp-validation-for="Input.DOB" class="text-danger"></span>
             </div>
            
             <div class="form-floating mb-3">
                 <!-- Fayda id --></>
-                <input asp-for="Input.FaydaIdNum" class="form-control" autocomplete="username" aria-required="true" placeholder="Fayda Id Number" />
-                <label asp-for="Input.FaydaIdNum">Fayda Id Number</label>
+                <input asp-for="Input.FaydaIdNum" class="form-control input-custom" autocomplete="username" aria-required="true" placeholder="Fayda Id Number" />
+                <label asp-for="Input.FaydaIdNum" class="text-white">Fayda Id Number</label>
                 <span asp-validation-for="Input.FaydaIdNum" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <!-- Account Number --></>
-                <input asp-for="Input.AccountNum" class="form-control" autocomplete="username" aria-required="true" placeholder="Account Number" />
-                <label asp-for="Input.AccountNum">Account Number</label>
+                <input asp-for="Input.AccountNum" class="form-control input-custom" autocomplete="username" aria-required="true" placeholder="Account Number" />
+                <label asp-for="Input.AccountNum" class="text-white">Account Number</label>
                 <span asp-validation-for="Input.AccountNum" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <!-- Account Number --></>
-                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="username" aria-required="true" placeholder="Phone Number" />
-                <label asp-for="Input.PhoneNumber">Phone Number</label>
+                <input asp-for="Input.PhoneNumber" class="form-control input-custom" autocomplete="username" aria-required="true" placeholder="Phone Number" />
+                <label asp-for="Input.PhoneNumber" class="text-white">Phone Number</label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                     <!-- Residence -->
-                <select asp-for="Input.Residence" aria-required="true" class="form-control">
+                <select asp-for="Input.Residence" aria-required="true" class="form-control input-custom">
                     <option value="">-- Select Residence --</option>
                     <option value="Addis Ababa">Addis Ababa</option>
                     <option value="Amhara">Amhara</option>
@@ -76,48 +76,48 @@
                     <option value="Harari">Harari</option>
                     <option value="Dire Dawa">Dire Dawa</option>
                 </select>
-                <label asp-for="Input.Residence">Residence</label>
+                <label asp-for="Input.Residence" class="text-white">Residence</label>
                 <span asp-validation-for="Input.Residence" class="text-danger"></span>
             </div> 
 
              <div class="form-floating mb-3">
                 <!-- role --></>
-                <select asp-for="Input.role" aria-required="true" class="form-control">
+                <select asp-for="Input.role" aria-required="true" class="form-control input-custom">
                     <option value="Admin">Admin</option>
                     <option value="Founder">Founder</option>
                     <option value="Donor">Donor</option>
                 </select>
-                <label asp-for="Input.role">Role</label>
+                <label asp-for="Input.role" class="text-white">Role</label>
                 <span asp-validation-for="Input.role" class="text-danger"></span>
             </div> 
              <div class="form-floating mb-3">
                 <!-- Linkedin Acount --></>
-                <input asp-for="Input.LinckedinAcc" class="form-control" autocomplete="username" aria-required="true" placeholder="FirstName" />
-                <label asp-for="Input.LinckedinAcc">Linkedin Account</label>
+                <input asp-for="Input.LinckedinAcc" class="form-control input-custom" autocomplete="username" aria-required="true" placeholder="FirstName" />
+                <label asp-for="Input.LinckedinAcc" class="text-white">Linkedin Account</label>
                 <span asp-validation-for="Input.LinckedinAcc" class="text-danger"></span>
             </div> 
             
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
+                <input asp-for="Input.Email" class="form-control input-custom" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email" class="text-white">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <!-- password --></>
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
+                <input asp-for="Input.Password" class="form-control input-custom" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.Password" class="text-white">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <!-- conf password --></>
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <input asp-for="Input.ConfirmPassword" class="form-control input-custom" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.ConfirmPassword" class="text-white">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
              <div class="form-floating mb-3">
                 <!-- user photo --></>
-                <label for="Input.UserImageFile">Your Photo</label>
-                <input asp-for="Input.UserImageFile" class="form-control" type="file"  name="Input.UserImageFile" />
+                <label for="Input.UserImageFile" class="text-white">Your Photo</label>
+                <input asp-for="Input.UserImageFile" class="form-control input-custom" type="file" name="Input.UserImageFile" />
                 <span asp-validation-for="Input.UserImageFile" class="text-danger"></span>
             </div>
 
@@ -127,7 +127,7 @@
                 <input asp-for="Input.IdImageFile" class="form-control" name="Input.IdImageFile" type="file" />
                 <span asp-validation-for="Input.IdImageFile" class="text-danger"></span>
             </div> *@
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Sign Up</button>
         </form>
     </div>
     
