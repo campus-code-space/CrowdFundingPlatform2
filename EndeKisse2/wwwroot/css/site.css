@@ -19,8 +19,18 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-image: url('../background-images/stock-img.jpg');
+  background-size:cover;
+/*  backdrop-filter: blur(10px);*/
 }
 
-nav {
+nav,footer {
     background-color: rgb(24,49,83);
+}
+.custom-bold {
+    font-weight: bold;
+}
+.nav-links:hover{
+    font-weight:500;
+
 }
