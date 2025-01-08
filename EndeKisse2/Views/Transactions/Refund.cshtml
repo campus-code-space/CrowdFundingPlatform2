@@ -1,0 +1,13 @@
+﻿@model EndeKissie2.Models.Transaction
+
+<h3>Refund Page</h3>
+
+<div>
+    <p>@ViewBag.status</p>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

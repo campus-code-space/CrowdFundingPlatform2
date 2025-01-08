@@ -14,6 +14,10 @@ namespace EndeKissie2.Models
 
         public DateTime TransactionDate { get; set; }
 
+        public double Amount { get; set; }
+
+        public string? Status { get; set; }
+
         // Navigation Properties
         public string? SenderId { get; set; }
         [ForeignKey("SenderId")]

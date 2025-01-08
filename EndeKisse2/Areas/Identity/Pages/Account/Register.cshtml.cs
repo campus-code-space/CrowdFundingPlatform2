@@ -122,6 +122,11 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
+            [Display(Name = "Fayda Id Number")]
+            public int AccountNum { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Residence")]
             public string Residence { get; set; }
 
@@ -151,20 +156,22 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             public string LinckedinAcc { get; set; }
 
             [Required]
-            [DataType(DataType.Upload)]
-            [Display(Name = "User Photo")]
-            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
-            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
-            public IFormFile UserPhoto { get; set; }
+            //[DataType(DataType.Upload)]
+            //[Display(Name = "User Photo")]
+            //[RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            //ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
+            [BindProperty]
+            public IFormFile UserImageFile { get; set; }
 
             [Required]
-            [DataType(DataType.Upload)]
-            [Display(Name = "ID Photo")]
-            [RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
-            ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
-            public IFormFile IdPhoto { get; set; }
+            ////[DataType(DataType.Upload)]
+            ////[Display(Name = "ID Photo")]
+            ////[RegularExpression(@".*\.(jpg|jpeg|png|gif|bmp|tiff|webp|JPG|PNG|WEBP|GIF|BMP|JXL|AVIF|TIFF)$",
+            ////ErrorMessage = "Invalid File Type. Please upload one of: jpg, jpeg, png, gif, bmp, tiff, webp.")]
+            [BindProperty]
+            public IFormFile IdImageFile { get; set; }
 
-            
+
         }
 
 
@@ -192,29 +199,46 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
                 user.PhoneNumber = Input.PhoneNumber;
                 user.LinkedinAcc = Input.LinckedinAcc;
 
-                if (Input.UserPhoto != null)
+                try
                 {
-                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Input.UserPhoto.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    if (Input.UserImageFile != null)
                     {
-                        await Input.UserPhoto.CopyToAsync(fileStream);
+                        string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Input.UserImageFile.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await Input.UserImageFile.CopyToAsync(fileStream);
+                        }
+                        user.UserImageUrl = $"~/images/{uniqueFileName}";
                     }
-                    user.UserImageUrl = $"~/images/{uniqueFileName}";
+                }
+                catch (Exception ex)
+                {
+                    // Log the error and provide feedback to the user.
+                    ModelState.AddModelError("", $"Error uploading file: {ex.Message}");
                 }
 
-                if (Input.IdPhoto != null)
+                try
                 {
-                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Input.IdPhoto.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    if (Input.IdImageFile != null)
                     {
-                        await Input.IdPhoto.CopyToAsync(fileStream);
+                        string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Input.IdImageFile.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await Input.IdImageFile.CopyToAsync(fileStream);
+                        }
+                        user.IdImageUrl = $"~/images/{uniqueFileName}";
                     }
-                    user.IdImageUrl = $"~/images/{uniqueFileName}";
                 }
+                catch (Exception ex)
+                {
+                    // Log the error and provide feedback to the user.
+                    ModelState.AddModelError("", $"Error uploading file: {ex.Message}");
+                }
+
 
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -283,38 +307,6 @@ namespace EndeKisse2.Areas.Identity.Pages.Account
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
-        //public async Task<bool> UploadImage(IFormFile imageFile, string userId)
-        //{
-        //    if (imageFile == null || imageFile.Length == 0)
-        //    {
-        //        return false;
-        //    }
-
-        //    // Define the folder where images will be stored
-        //    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-        //    Directory.CreateDirectory(uploadPath); // Ensure directory exists
-
-        //    // Generate unique file name
-        //    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
-        //    var filePath = Path.Combine(uploadPath, fileName);
-
-        //    // Save file locally
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await imageFile.CopyToAsync(stream);
-        //    }
-
-        //    // Save image metadata to database
-        //    var imageStore = new ImageStore
-        //    {
-        //        UserId = userId,
-        //        ImageUrl = $"/images/{fileName}" // Relative path to the image
-        //    };
-
-        //    _context.ImageStore.Add(imageStore);
-        //    await _context.SaveChangesAsync();
-
-        //    return true;
-        //}
+       
     }
 }
