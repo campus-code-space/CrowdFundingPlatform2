@@ -90,7 +90,7 @@ namespace EndeKisse2.Controllers
                     _context.Remove(transaction);
                 }
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Category", transaction.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", transaction.ProjectId);
             ViewData["SenderId"] = new SelectList(_context.ApplicationUser, "Id", "Id", transaction.SenderId);
             return View(transaction);
         }
@@ -108,7 +108,7 @@ namespace EndeKisse2.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Category", transaction.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", transaction.ProjectId);
             ViewData["SenderId"] = new SelectList(_context.ApplicationUser, "Id", "Id", transaction.SenderId);
             return View(transaction);
         }
@@ -145,7 +145,7 @@ namespace EndeKisse2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Category", transaction.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", transaction.ProjectId);
             ViewData["SenderId"] = new SelectList(_context.ApplicationUser, "Id", "Id", transaction.SenderId);
             return View(transaction);
         }
