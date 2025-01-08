@@ -17,20 +17,45 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-  background-image: url('../background-images/stock-img.jpg');
-  background-size:cover;
-/*  backdrop-filter: blur(10px);*/
+body{
+    margin-bottom: 60px;
+    background-image: url('../background-images/stock-img.jpg');
+    background-size:cover;
+    background-position:center
 }
-
-nav,footer {
+header {
+    background-color:green;
+    height: 70px;
+}
+nav {
+    height:100%
+}
+nav, footer {
     background-color: rgb(24,49,83);
+
 }
 .custom-bold {
     font-weight: bold;
+}
+.custom-blueblack {
+    background-color: rgb(24,49,83);
+
 }
 .nav-links:hover{
     font-weight:500;
 
 }
+
+p {
+    font-size: 1.3em;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-shadow: 2px 2px 2px white;
+}
+ p:hover {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-shadow: 2px 2px 2px black;
+       
+ }
