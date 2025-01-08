@@ -45,7 +45,9 @@ nav, footer {
     font-weight:500;
 
 }
-
+h1 {
+    color:white
+}
 p {
     font-size: 1.3em;
     margin: auto;
